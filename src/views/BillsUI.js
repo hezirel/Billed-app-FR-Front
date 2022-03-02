@@ -20,7 +20,15 @@ const row = (bill) => {
   }
 
 const rows = (data) => {
-  return (data && data.length) ? data.map(bill => row(bill)).join("") : ""
+
+    data.sort((a, b) => {
+    const x = (Date.parse(a.date));
+    const y = (Date.parse(b.date));
+    if (x === y) return 0;
+    else if (x < y) return 1;
+    else return -1;
+  })
+  return (data && data.length) ? (data.map(bill => row(bill))).join("") : ""
 }
 
 export default ({ data: bills, loading, error }) => {
