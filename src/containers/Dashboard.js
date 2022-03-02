@@ -73,9 +73,9 @@ export default class {
     this.onNavigate = onNavigate
     this.store = store
     console.log(bills);
-    $('#arrow-icon1').click((e) => this.handleShowTickets(e, filteredBills(bills, "pending"), 1))
-    $('#arrow-icon2').click((e) => this.handleShowTickets(e, filteredBills(bills, "accepted"), 2))
-    $('#arrow-icon3').click((e) => this.handleShowTickets(e, filteredBills(bills, "refused"), 3))
+    $('#arrow-icon1').click((e) => this.handleShowTickets(e, bills, 1))
+    $('#arrow-icon2').click((e) => this.handleShowTickets(e, bills, 2))
+    $('#arrow-icon3').click((e) => this.handleShowTickets(e, bills, 3))
     new Logout({ localStorage, onNavigate })
   }
 
@@ -146,7 +146,7 @@ export default class {
       this.counter ++
     }
 
-    bills.forEach(bill => {
+    (filteredBills(bills, getStatus(index))).forEach(bill => {
       $(`#open-bill${bill.id}`).click((e) => {this.handleEditTicket(e, bill, bills)})
     })
 
