@@ -4,6 +4,7 @@ import LoadingPage from "./LoadingPage.js"
 
 import Actions from './Actions.js'
 
+//€:formatDate call put here, localisation adaptable by locale
 const row = (bill) => {
   return (`
     <tr>
@@ -20,15 +21,21 @@ const row = (bill) => {
   }
 
 const rows = (data) => {
+  function inverseSort(c){
+    c = c.sort((a, b) => {
+      //€:Date.parse can't parse localized fr format
+      let x = Date.parse(a.date);
+      let y = Date.parse(b.date);
+      if (x < y) return 1
+      else if (x > y) return -1;
+      else return 0;
+    })
+    return c;
+  }
 
-    data.sort((a, b) => {
-    const x = (Date.parse(a.date));
-    const y = (Date.parse(b.date));
-    if (x === y) return 0;
-    else if (x < y) return 1;
-    else return -1;
-  })
-  return (data && data.length) ? (data.map(bill => row(bill))).join("") : ""
+  data = inverseSort(data);
+  data = data.map(bill => row(bill)).join("");
+  return (data && data.length) ? data : ""
 }
 
 export default ({ data: bills, loading, error }) => {
