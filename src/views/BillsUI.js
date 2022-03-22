@@ -22,6 +22,7 @@ const row = (bill) => {
 
 const rows = (data) => {
   function inverseSort(c){
+    if (c) {
     c = c.sort((a, b) => {
       //€:Date.parse can't parse localized fr format
       let x = Date.parse(a.date);
@@ -29,12 +30,12 @@ const rows = (data) => {
       if (x < y) return 1
       else if (x > y) return -1;
       else return 0;
-    })
+    })}
     return c;
   }
 
   data = inverseSort(data);
-  data = data.map(bill => row(bill)).join("");
+  data ? data = data.map(bill => row(bill)).join("") : false;
   return (data && data.length) ? data : ""
 }
 
