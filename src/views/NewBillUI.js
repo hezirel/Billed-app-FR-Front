@@ -32,6 +32,7 @@ export default () => {
                   <div class="col-half">
                     <label for="datepicker" class="bold-label">Date</label>
                     <input required type="date" class="form-control blue-border" data-testid="datepicker" />
+                    <div class="hideErrorMessage" id="errorExpenseName" data-testid="errorExpenseName">Vous devez entrer au moins 5 caractères.</div>
                   </div>
                   <div class="col-half">
                     <label for="amount" class="bold-label">Montant TTC </label>
