@@ -1,8 +1,6 @@
 import { ROUTES_PATH } from '../constants/routes.js'
 import Logout from "./Logout.js"
-import {
-  bills
-} from '../fixtures/bills'
+
 
 export default class NewBill {
   constructor({ document, onNavigate, store, localStorage }) {
