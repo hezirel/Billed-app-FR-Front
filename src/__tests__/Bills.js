@@ -17,6 +17,7 @@ import {
   ROUTES_PATH
 } from '../constants/routes'
 import mockStore from '../__mocks__/store.js'
+import { bills } from '../fixtures/bills'
 import router from '../app/Router'
 
 jest.mock('../app/store', () => mockStore)
@@ -90,14 +91,14 @@ describe('Given I am connected as an employee and I am on Bills page', () => {
   })
 })
 
-//test d'intégration GET
-describe('Given I am a user connected as Employee', () => {
-  describe('When I navigate to Bills', () => {
-    test('fetches bills from mock API GET', async () => {
+describe('Given I Log In as an employee', () => {
+  describe('Upon redirect to Bills route', () => {
+    test('Fetch data from API', async () => {
       localStorage.setItem(
         'user',
         JSON.stringify({
           type: 'Employee',
+          // Login as mock API user
           email: 'a@a'
         })
       )
@@ -109,7 +110,7 @@ describe('Given I am a user connected as Employee', () => {
       await waitFor(() => screen.getByText('Mes notes de frais'))
       expect(screen.getByTestId('btn-new-bill')).toBeTruthy()
     })
-    describe('When an error occurs on API', () => {
+    describe('API returning error code', () => {
       beforeEach(() => {
         jest.spyOn(mockStore, 'bills')
         Object.defineProperty(window, 'localStorage', {
@@ -127,7 +128,7 @@ describe('Given I am a user connected as Employee', () => {
         document.body.appendChild(root)
         router()
       })
-      test('fetches bills from an API and fails with 404 message error', async () => {
+      test('API return 404 error code', async () => {
         mockStore.bills.mockImplementationOnce(() => {
           return {
             list: () => {
@@ -141,7 +142,7 @@ describe('Given I am a user connected as Employee', () => {
         expect(message).toBeTruthy()
       })
 
-      test('fetches messages from an API and fails with 500 message error', async () => {
+      test('API return 500 error code', async () => {
         mockStore.bills.mockImplementationOnce(() => {
           return {
             list: () => {
