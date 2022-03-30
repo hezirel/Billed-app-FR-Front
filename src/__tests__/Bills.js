@@ -41,20 +41,26 @@ describe('Given I am connected as an employee and I am on Bills page', () => {
         })
       }
       const store = null
-      //Bootsrap mock to call the modal method of the handleClickIconEye function
-      $.fn.modal = jest.fn()
+
+
       const billsView = new Bills({
         document,
         onNavigate,
         store,
         localStorage: window.localStorage,
       })
-      //   const handleClickIconEye = jest.spyOn(billsView, 'handleClickIconEye')
+
+      //Setup mocking wrapper to collect data about modal calling
+      $.fn.modal = jest.fn()
       const handleClickNewBill = jest.fn(billsView.handleClickNewBill)
       const newBillButton = screen.getByTestId('btn-new-bill')
+
       newBillButton.addEventListener('click', handleClickNewBill())
       userEvent.click(newBillButton)
+
       expect(handleClickNewBill).toHaveBeenCalled()
+      // We could also have checked for the correct change of pathname in URL
+      // But that wouldn't assure us the UI has correctly changed
       expect(screen.getByText('Envoyer une note de frais')).toBeTruthy()
     })
   })
